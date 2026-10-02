@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Manager — Vanilla JavaScript &amp; State Management</title>
+  <meta name="description" content="Client-side To-Do application built with pure HTML5, CSS3, and vanilla JavaScript. Features localStorage persistence and event delegation.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./todo.css">
+</head>
+<body>
+
+  <!-- Screen reader live announcer -->
+  <div id="live-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+  <div class="container">
+    <!-- Header Landmark -->
+    <header class="app-header" role="banner">
+      <div class="top-bar">
+        <span class="badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+          </svg>
+          Vanilla JS &bull; LocalStorage &bull; State Management
+        </span>
+
+        <button type="button" id="theme-toggle-btn" class="theme-toggle-btn" aria-label="Toggle color theme">
+          🌙 Dark Mode
+        </button>
+      </div>
+
+      <h1>Task Management System</h1>
+      <p class="subtitle">
+        Client-side task application implemented using HTML5, CSS variables, and vanilla JavaScript.
+        <a href="./#todo" class="nav-back-link">Return to Portfolio Overview &rarr;</a>
+      </p>
+    </header>
+
+    <!-- Main Landmark -->
+    <main role="main">
+      <section class="todo-card" aria-labelledby="todo-card-title">
+        <h2 id="todo-card-title" class="sr-only">Task Operations &amp; List</h2>
+
+        <!-- Task Input Form -->
+        <form id="todo-form" class="form-group" novalidate>
+          <label for="todo-input" class="form-label">New Task Description</label>
+          <div class="input-row">
+            <input
+              type="text"
+              id="todo-input"
+              class="todo-input"
+              placeholder="e.g. Implement exploratory data analysis pipeline..."
+              autocomplete="off"
+              aria-describedby="todo-error-message"
+            >
+            <button type="submit" id="todo-add-button" class="btn-primary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+              </svg>
+              <span>Add Task</span>
+            </button>
+          </div>
+          <p id="todo-error-message" class="error-message" role="alert"></p>
+        </form>
+
+        <!-- Controls Row: Filter buttons & Counters -->
+        <div class="controls-row">
+          <!-- Filter Buttons (Event Delegation Target) -->
+          <div id="todo-filter-container" class="filters-group" role="group" aria-label="Filter tasks">
+            <button type="button" class="filter-btn active" data-filter="all" aria-pressed="true">All</button>
+            <button type="button" class="filter-btn" data-filter="active" aria-pressed="false">Active</button>
+            <button type="button" class="filter-btn" data-filter="completed" aria-pressed="false">Completed</button>
+          </div>
+
+          <!-- Counts & Bulk Action -->
+          <div class="counts-group">
+            <span id="todo-items-count" class="items-left">0 items left</span>
+            <button type="button" id="todo-clear-completed" class="btn-clear" style="display: none;">Clear Completed</button>
+          </div>
+        </div>
+
+        <!-- Dynamic Task List (Event Delegation Target) -->
+        <ul id="todo-task-list" class="task-list" aria-label="Tasks list">
+          <!-- Elements dynamically created via JavaScript renderTasks() -->
+        </ul>
+      </section>
+
+      <!-- Technical Aside -->
+      <aside class="info-card" style="margin-top: 1.5rem;" aria-labelledby="technical-info-heading">
+        <h2 id="technical-info-heading">Technical Architecture &amp; State Synchronization</h2>
+        <p>
+          Data is maintained in a centralized JavaScript state object: <code>const state = { tasks: [], filter: "all" }</code>.
+          Changes trigger automated persistence to <code>window.localStorage</code> via structured JSON serialization and re-render the DOM dynamically using <code>document.createElement()</code>. Event delegation intercepts all actions through the list container, avoiding per-element listener duplication.
+        </p>
+      </aside>
+    </main>
+  </div>
+
+  <!-- Vanilla JavaScript Logic -->
+  <script src="./todo.js"></script>
+</body>
+</html>
